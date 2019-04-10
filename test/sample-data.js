@@ -42,23 +42,22 @@ const dictionary = {
 const permutations = []
 const wordTypes = Object.keys(dictionary)
 const combos = combinations(wordTypes, 1, 6)
-const prompts = combos.map(prompt).slice(0, 10)
-console.log(JSON.stringify(prompts, null, '\t'))
+console.log(combos)
 
-function combinations(array, minLength, maxLength){
-	const output = []
-	permutate()
-	return output
+function combinations(components, minLength, maxLength){
+	const completedCombos = []
+	addCombinations([])
+	return completedCombos
 
-	function permutate(prefix = []){
-		array.forEach(item=>{
-			const variant = prefix.slice()
-			variant.push(item)
-			if(variant.length >= minLength && variant.length <= maxLength){
-				output.push(variant)
+	function addCombinations(firstComponentsInCombo = []){
+		components.forEach(component=>{
+			const combo = Array.from(firstComponentsInCombo)
+			combo.push(component)
+			if(combo.length >= minLength && combo.length <= maxLength){
+				completedCombos.push(combo)
 			}
-			if(variant.length < maxLength){
-				permutate(variant)
+			if(combo.length < maxLength){
+				addCombinations(combo)
 			}
 		})
 	}
